@@ -5,7 +5,15 @@ const ShortUrl = require("./models/shortUrl");
 
 const app = express();
 
-mongoose.connect(process.env.DATABASE_URL);
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.DATABSE_URL);
+    console.log("Connected to MongoDB...");
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+}
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: false }));
