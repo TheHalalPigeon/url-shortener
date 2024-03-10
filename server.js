@@ -4,8 +4,17 @@ const mongoose = require("mongoose");
 const ShortUrl = require("./models/shortUrl");
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-mongoose.connect(process.env.DATABASE_URL);
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.DATABASE_URL);
+    console.log("MongoDB Connected");
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+}
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: false }));
@@ -30,4 +39,8 @@ app.get("/:shortUrl", async (req, res) => {
   res.redirect(shortUrl.full);
 });
 
-app.listen(process.env.PORT || 5000);
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log("listening for requests");
+  });
+});
