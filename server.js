@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const ShortUrl = require("./models/shortUrl");
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 
 const connectDB = async () => {
   try {
