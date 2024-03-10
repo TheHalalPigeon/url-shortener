@@ -14,7 +14,6 @@ const connectDB = async () => {
   } catch (error) {
     console.log(error);
     process.exit(1);
-    return;
   }
 }
 
@@ -36,7 +35,7 @@ app.get("/:shortUrl", async (req, res) => {
   if (shortUrl == null) return res.sendStatus(404);
 
   shortUrl.clicks++;
-  shortUrl.save();
+  await shortUrl.save();
 
   res.redirect(shortUrl.full);
 });
